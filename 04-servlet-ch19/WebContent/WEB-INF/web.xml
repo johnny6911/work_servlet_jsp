@@ -34,7 +34,7 @@
 		<!-- 초기 key와 value를 설정 -->
 		<init-param>
 			<param-name>encoding</param-name>	<!-- key -->
-			<param-value>utf-8</param-value>	<!-- value -->
+			<param-value>utf-8</param-value>	<!-- value 해당 변수와 값은 필터 내부에서만 쓸수있음 -->
 		</init-param>
 	</filter>
 	
