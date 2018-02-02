@@ -1,12 +1,22 @@
 package com.koitt.board.controller;
-
+//dao만들고 서블릿 만들고 컨트롤러 만듬
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.koitt.board.model.Command;
+import com.koitt.board.model.DeleteCommand;
+import com.koitt.board.model.InsertCommand;
+import com.koitt.board.model.ListCommand;
+import com.koitt.board.model.UpdateCommand;
+import com.koitt.board.model.UpdateFormCommand;
+import com.koitt.board.model.ViewCommand;
 
 public class BoardServlet extends HttpServlet{
 	
@@ -27,7 +37,7 @@ public class BoardServlet extends HttpServlet{
 			req.setCharacterEncoding("UTF-8");
 			
 			// cmd 파라미터 값을 가져온다
-			String cmd = req.getParameter("cmd");
+			String cmd = req.getParameter("cmd"); //String cmd가 CMD_VIEW가 되는것
 			
 			// 만약 cmd값이 없다면 기본으로 게시판 목록 화면으로 이동
 			if (cmd == null || cmd.trim().length() == 0) { //String cmd의 공백을 없게 해줌
@@ -36,9 +46,49 @@ public class BoardServlet extends HttpServlet{
 			
 			// cmd 값에 따라 분기처리
 			String page = null;		// 포워딩할 JSP 페이지 명
+			Command command = null;	// 비지니스 로직을 처리할 Model 객체
 			
+			switch (cmd){
+				case "CMD_LIST":
+					command = new ListCommand(); // 리스트커맨드에서 구현했던 기능을 불러옴
+					page = command.execute(req, resp);
+					break;
+					
+				case "CMD_VIEW":
+					command = new ViewCommand();
+					page = command.execute(req, resp);
+					break;
+				case "CMD_INSERT":
+					command = new InsertCommand();
+					page = command.execute(req, resp);
+					break;
+				case "CMD_DELETE":
+					command = new DeleteCommand();
+					page = command.execute(req, resp);
+					break;
+				case "CMD_UPDATE_FORM":
+					command = new UpdateFormCommand();
+					page = command.execute(req, resp);
+					break;
+				case "CMD_UPDATE":
+					command = new UpdateCommand();
+					page = command.execute(req, resp);
+					break;
+			}
+			
+			// JSP 페이지로 서블릿에서 setAttribute한 내용을 포워딩
+			RequestDispatcher rd =  req.getRequestDispatcher(page);
+			rd.forward(req, resp);
 			
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
