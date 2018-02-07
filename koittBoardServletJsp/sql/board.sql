@@ -5,8 +5,9 @@ CREATE TABLE board (
 	no INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	title VARCHAR(30) NOT NULL,
 	content VARCHAR(255) NULL,
-	writer VARCHAR(10) NOT NULL,
-	regdate DATE NOT NULL
+	user_no INT NOT NULL,
+	regdate DATE NOT NULL,
+	FOREIGN KEY (user_no) REFERENCES users (no) 
 );
 
 #DML(Data Manipulation Language)

@@ -1,4 +1,4 @@
-package com.koitt.board.model;
+package com.koitt.book.model.command;
 
 import java.sql.SQLException;
 
@@ -7,6 +7,5 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface Command {
 	String execute(HttpServletRequest req, HttpServletResponse resp)
-			throws ClassNotFoundException, SQLException;
-	
+		throws ClassNotFoundException, SQLException;
 }

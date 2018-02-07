@@ -84,7 +84,7 @@ public class BoardDao {
 		return board;
 	}
 	
-	// 글 작성
+	// 글 작성 (인설트는 리턴할 결과가 딱히 없음)
 	public void insert(Board board) throws ClassNotFoundException, SQLException {
 		// 1. 데이터베이스 커넥션 객체 가져오기
 		Connection conn = DBUtil.getInstance().getConnection();
